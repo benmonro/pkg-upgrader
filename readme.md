@@ -20,7 +20,6 @@ Create a `cli.js` file at the root of your project that will serve as your upgra
 
 ```js
 #!/usr/bin/env node
-'use strict';
 
 import upgrader from 'pkg-upgrader';
 import pkg from './package.json';

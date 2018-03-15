@@ -16,13 +16,13 @@ $ yarn add pkg-upgrader jscodeshift
 
 ## Usage
 
-Create a `cli.js` file at the root of your project that will serve as your modder executable, and add this sample code ([sample available here](sample/cli.js)):
+Create a `cli.js` file at the root of your project that will serve as your upgrader executable, and add this sample code ([sample available here](sample/cli.js)):
 
 ```js
 #!/usr/bin/env node
 'use strict';
 
-import modder from 'pkg-upgrader';
+import upgrader from 'pkg-upgrader';
 import pkg from './package.json';
 import releases from './releases.json';
 
@@ -33,12 +33,12 @@ var settings = {
 	dirname: __dirname
 };
 
-modder.handleCliArgs(settings)
-	.then(modder.checkForUpdates)
-	.then(modder.checkGitIsClean)
-	.then(modder.prompt)
-	.then(modder.applyCodemods)
-	.then(modder.printTip)
+upgrader.handleCliArgs(settings)
+	.then(upgrader.checkForUpdates)
+	.then(upgrader.checkGitIsClean)
+	.then(upgrader.prompt)
+	.then(upgrader.applyCodemods)
+	.then(upgrader.printTip)
 	.catch(function (err) {
 		console.error(err.message);
 		process.exit(1);

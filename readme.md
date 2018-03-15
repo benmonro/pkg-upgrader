@@ -88,4 +88,6 @@ Unless you committed your changes and your directory is clean, when you run it, 
 
 ## License
 
+
+MIT © [Ben Monro](http://github.com/benmonro)
 MIT © [Jeroen Engels](http://github.com/jfmengels)

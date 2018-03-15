@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-var upgrader = require('lib-upgrader');
+var upgrader = require('pkg-upgrader');
 var pkg = require('./package.json');
 var releases = require('./releases.json');
 

@@ -1,0 +1,62 @@
+{
+  "name": "lib-codemodder",
+  "version": "0.0.1",
+  "description": "CLI builder to help users upgrade library versions.",
+  "license": "MIT",
+  "repository": "benmonro/lib-codemodder",
+  "contributors": [
+    {
+      "name": "Jeroen Engels",
+      "email": "jfm.engels@gmail.com",
+      "url": "github.com/jfmengels"
+    }
+  ],
+  "author": {
+    "name": "Ben Monro",
+    "email": "ben.monro@gmail.com",
+    "url": "github.com/benmonro"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "!*.test.js"
+  ],
+  "keywords": [
+    "codemod",
+    "update",
+    "upgrade",
+    "jscodeshift",
+    "transform",
+    "npm"
+  ],
+  "dependencies": {
+    "bluebird": "^3.4.0",
+    "globby": "^4.1.0",
+    "inquirer": "^1.0.2",
+    "is-git-clean": "^1.0.0",
+    "jscodeshift": "^0.3.20",
+    "lodash.assign": "^4.0.9",
+    "lodash.findindex": "^4.4.0",
+    "lodash.flatten": "^4.2.0",
+    "meow": "^3.7.0",
+    "semver": "^5.1.0",
+    "update-notifier": "^0.7.0"
+  },
+  "devDependencies": {
+    "ava": "^0.14.0",
+    "dir-babel": "^1.0.14",
+    "jest": "^22.4.2",
+    "xo": "^0.15.1"
+  },
+  "ava": {
+    "files": [
+      "**/*.test.js"
+    ]
+  }
+}

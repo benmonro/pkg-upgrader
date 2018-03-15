@@ -1,4 +1,4 @@
-# lib-codemodder 
+# pkg-upgrader 
 
 <img src="screenshot.gif" width="440" align="right">
 
@@ -10,7 +10,7 @@ Codemods, or [`jscodeshift`](https://github.com/facebook/jscodeshift) transforms
 ## Install
 
 ```
-$ yarn add lib-codemodder jscodeshift
+$ yarn add pkg-upgrader jscodeshift
 ```
 
 
@@ -22,7 +22,7 @@ Create a `cli.js` file at the root of your project that will serve as your modde
 #!/usr/bin/env node
 'use strict';
 
-import modder from 'lib-codemodder';
+import modder from 'pkg-upgrader';
 import pkg from './package.json';
 import releases from './releases.json';
 

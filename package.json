@@ -1,9 +1,10 @@
 {
-  "name": "lib-codemodder",
+  "name": "pkg-upgrader",
   "version": "0.0.1",
   "description": "CLI builder to help users upgrade library versions.",
   "license": "MIT",
-  "repository": "benmonro/lib-codemodder",
+  "repository": "benmonro/pkg-upgrader",
+  "main": "lib/index.js",
   "contributors": [
     {
       "name": "Jeroen Engels",
@@ -20,10 +21,12 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "xo && ava"
+    "build": "dir-babel --src-dir src --out-dir lib --copy-files",
+    "std-version": "standard-version -m \"chore(release): version %s build ${CIRCLE_BUILD_NUM} [ci skip]\"",
+    "test": "jest"
   },
   "files": [
-    "index.js",
+    "src/index.js",
     "lib",
     "!*.test.js"
   ],
@@ -36,13 +39,11 @@
     "npm"
   ],
   "dependencies": {
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-0": "^6.24.1",
     "bluebird": "^3.4.0",
     "globby": "^4.1.0",
     "inquirer": "^1.0.2",
     "is-git-clean": "^1.0.0",
-    "jscodeshift": "^0.3.20",
+    "jscodeshift": "^0.5.0",
     "lodash.assign": "^4.0.9",
     "lodash.findindex": "^4.4.0",
     "lodash.flatten": "^4.2.0",
@@ -51,14 +52,10 @@
     "update-notifier": "^0.7.0"
   },
   "devDependencies": {
-    "ava": "^0.14.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
     "dir-babel": "^1.0.14",
     "jest": "^22.4.2",
-    "xo": "^0.15.1"
-  },
-  "ava": {
-    "files": [
-      "**/*.test.js"
-    ]
+    "standard-version": "^4.3.0"
   }
 }

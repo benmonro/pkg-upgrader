@@ -69,7 +69,8 @@ test('getVersions should work with a single release', () => {
 	}]);
 });
 
-test('indexOfVersion', () => {
+describe('indexOfVersion', () => {
+test('with lots of versions', () => {
 	const versions = [
 		{
 			name: 'older than 0.0.1',
@@ -97,14 +98,23 @@ test('indexOfVersion', () => {
 
 	expect(util.indexOfVersion(versions, '0.0.0')).toBe(0);
 	expect(util.indexOfVersion(versions, '0.0.1')).toBe(1);
+	expect(util.indexOfVersion(versions, '0.0.2')).toBe(2);
 	expect(util.indexOfVersion(versions, '1.0.0')).toBe(2);
 	expect(util.indexOfVersion(versions, '1.0.1')).toBe(3);
 	expect(util.indexOfVersion(versions, '1.2.0')).toBe(4);
 	expect(util.indexOfVersion(versions, '1.10.0')).toBe(5);
 	expect(util.indexOfVersion(versions, '88.0.1')).toBe(6);
-	expect(util.indexOfVersion(versions, '76.876.321')).toBe(-1);
+	expect(util.indexOfVersion(versions, '76.876.321')).toBe(6);
 });
 
+test('with just one version', () => {
+	const versions = [
+		{name:"3.1.0", value:"3.1.0"}
+	];
+
+	expect(util.indexOfVersion(versions, '2.1.0')).toBe(0);
+})
+});
 test('takeVersionsAfter', () => {
 	const versions = [
 		{
@@ -207,6 +217,17 @@ test('selectTransforms', () => {
 		'lib/script-0.15.0.js'
 	]);
 
+	expect(util.selectTransforms(releases, '0.13.5', '0.15.5')).toEqual([
+		'lib/ok-to-truthy.js',
+		'lib/same-to-deep-equal.js',
+		'lib/script-0.15.0.js'
+	]);
+
+	expect(util.selectTransforms(releases, '0.13.5', '0.14.0')).toEqual([
+		'lib/ok-to-truthy.js',
+		'lib/same-to-deep-equal.js'
+	]);
+
 	expect(util.selectTransforms(releases, '0.0.0', '9999.9999.9999')).toEqual([
 		'lib/ok-to-truthy.js',
 		'lib/same-to-deep-equal.js',
@@ -215,7 +236,31 @@ test('selectTransforms', () => {
 		'lib/script-2.0.0.js'
 	]);
 
+	expect(util.selectTransforms(releases, '0.13.0', '0.15.0')).toEqual([
+		'lib/ok-to-truthy.js',
+		'lib/same-to-deep-equal.js',
+		'lib/script-0.15.0.js'
+	]);
+
 	expect(util.selectTransforms(releases, '9999.9999.9999', '0.0.0')).toEqual([]);
+});
+
+test('coerce versions', () => {
+	const releases = [
+		{version: '0.10.0', transforms:['a.js']},
+		{version: '0.12.0', transforms:['b.js']},
+		{version: '0.13.0', transforms:['c.js']},
+		{version: '1.0.0', transforms:['d.js']},
+		{version: '2.0.0', transforms:['e.js']},
+		{version: '4.0.0', transforms:['f.js']}
+	];
+
+	expect(util.selectTransforms(releases, '0.10', '2')).toEqual([
+		'b.js',
+		'c.js',
+		'd.js',
+		'e.js'
+	]);
 });
 
 test('resolvePath', () => {

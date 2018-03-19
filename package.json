@@ -40,6 +40,7 @@
   ],
   "dependencies": {
     "bluebird": "^3.4.0",
+    "chalk": "^2.3.2",
     "globby": "^4.1.0",
     "inquirer": "^1.0.2",
     "is-git-clean": "^1.0.0",

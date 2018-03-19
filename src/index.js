@@ -7,34 +7,34 @@ import isGitClean from 'is-git-clean';
 import updateNotifier from 'update-notifier';
 import Runner from 'jscodeshift/dist/Runner.js';
 import util from './util';
+import chalk from 'chalk';
 
-function runTransforms(settings, transforms, files) {
-	return Promise.mapSeries(transforms, transform => Runner.run(transform, files, {silent: settings.silent}));
+function runTransforms({silent}, transforms, files) {
+	return Promise.mapSeries(transforms, transform => Runner.run(transform, files, {silent: silent}));
 }
 
-function cliArgs(settings, releases) {
+function cliArgs({pkg:{name,description,version}, libraryName},releases) {
 	const upgrades = util.listUpgrades(releases);
 	const help = [
 		'Usage',
-		`  $ ${settings.pkg.name} [<file|glob> ...]`,
+		`  $ ${name} [<file|glob> ...]`,
 		'',
 		'Options',
-		`  --from <version> Specify the version of ${settings.libraryName} currently used`,
-		`  --to <version>   Specify the version of ${settings.libraryName} to move to`,
+		`  --from <version> Specify the version of ${libraryName} currently used`,
+		`  --to <version>   Specify the version of ${libraryName} to move to`,
 		'  --force, -f      Bypass safety checks and forcibly run codemods',
 		'  --silent, -S     Disable log output',
 		'',
 		'Available upgrades'
 	].concat(upgrades);
 
-	const pkg = settings.pkg || {};
 	return meow({
-		description: pkg.description,
-		version: pkg.version,
+		description,
+		version,
 		help
 	}, {
 		boolean: ['force', 'silent'],
-		string: ['_'],
+		string: ['_', 'from', 'to'],
 		alias: {
 			f: 'force',
 			S: 'silent',
@@ -43,8 +43,8 @@ function cliArgs(settings, releases) {
 	});
 }
 
-function versionsAfter(versions, versionIndex, answers) {
-	let version = answers.from;
+function versionsAfter(versions, versionIndex, {from}) {
+	let version = from;
 	if (versionIndex !== -1) {
 		version = versions[versionIndex].value;
 	}
@@ -103,10 +103,19 @@ function checkAndRunTransform(settings, transforms, files) {
 }
 
 function printTip(settings) {
+	if(settings.silent) {
+		return Promise.resolve(settings);
+	}
 	console.log('\nFor similar projects, you may want to run the following command:');
 	console.log(
 		`    ${settings.pkg.name} --from ${settings.from} --to ${settings.to} ${settings.files.map(JSON.stringify).join(' ')}`
 	);
+
+	const releases = settings.releases.slice().sort(util.sortByVersion);
+	const selectedVersions = util.selectVersions(releases, settings.from, settings.to);
+	console.log("\nApplying Versions:");
+	console.log('    ',chalk.white(selectedVersions.join(', ')), '\n');
+
 	return Promise.resolve(settings);
 }
 
@@ -121,6 +130,18 @@ function applyCodemods(settings) {
 
 	return checkAndRunTransform(settings, transforms, settings.files)
 		.return(settings);
+}
+
+function showVerions(settings) {
+	if (!settings.files || settings.files.length === 0) {
+		return Promise.resolve(settings);
+	}
+
+	const releases = settings.releases.slice().sort(util.sortByVersion);
+	const selectedVersions = util.selectVersions(releases, settings.from, settings.to);
+	console.log("Applying Versions:\n");
+	console.log(selectedVersions.join('\n'));
+	return Promise.resolve(settings);
 }
 
 function checkGitIsClean(settings) {

@@ -1,14 +1,13 @@
 #!/usr/bin/env node
-'use strict';
 
-var upgrader = require('lib-upgrader');
-var pkg = require('./package.json');
-var releases = require('./releases.json');
+import upgrader from 'pkg-upgrader';
+import pkg from './package.json';
+import releases from './releases.json';
 
-var settings = {
+const settings = {
 	libraryName: 'Your library name',
-	releases: releases,
-	pkg: pkg,
+	releases,
+	pkg,
 	dirname: __dirname
 };
 
@@ -18,7 +17,7 @@ upgrader.handleCliArgs(settings)
 	.then(upgrader.prompt)
 	.then(upgrader.applyCodemods)
 	.then(upgrader.printTip)
-	.catch(function (err) {
-		console.error(err.message);
+	.catch(({message}) => {
+		console.error(message);
 		process.exit(1);
 	});

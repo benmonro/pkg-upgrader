@@ -36,11 +36,28 @@ function getVersions(releases) {
 }
 
 function indexOfVersion(versions, version) {
-	return findIndex(versions, v => v.value === version);
+	version = semver.coerce(version);
+	if(version === null) {
+		return -1;
+	}
+	if(semver.lte(version, versions[0].value)) {
+		return 0;
+	}
+
+	return findIndex(versions, v => semver.gte(v.value,version));
 }
 
 function takeVersionsAfter(versions, chosen) {
 	return versions.slice(indexOfVersion(versions, chosen) + 1);
+}
+
+function selectVersions(releases, currentVersion, nextVersion) {
+	const semverToRespect = `>${currentVersion} <=${nextVersion}`;
+
+	return releases
+		.filter(release => semver.satisfies(release.version, semverToRespect))
+		.map(({version}) => version);
+	
 }
 
 function selectTransforms(releases, currentVersion, nextVersion) {
@@ -48,7 +65,7 @@ function selectTransforms(releases, currentVersion, nextVersion) {
 
 	const transforms = releases
 		.filter(release => semver.satisfies(release.version, semverToRespect))
-		.map(release => release.transforms);
+		.map(({transforms}) => transforms);
 
 	return flatten(transforms);
 }
@@ -72,6 +89,7 @@ export default {
 	indexOfVersion,
 	takeVersionsAfter,
 	selectTransforms,
+	selectVersions,
 	resolvePath,
 	listUpgrades
 };

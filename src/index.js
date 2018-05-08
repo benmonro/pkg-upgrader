@@ -9,8 +9,8 @@ import Runner from 'jscodeshift/dist/Runner.js';
 import util from './util';
 import chalk from 'chalk';
 
-function runTransforms({silent}, transforms, files) {
-	return Promise.mapSeries(transforms, transform => Runner.run(transform, files, {silent: silent}));
+function runTransforms(settings, transforms, files) {
+	return Promise.mapSeries(transforms, transform => Runner.run(transform, files, settings));
 }
 
 function cliArgs({pkg:{name,description,version}, libraryName},releases) {

@@ -20,10 +20,11 @@ function cliArgs({pkg:{name,description,version}, libraryName},releases) {
 		`  $ ${name} [<file|glob> ...]`,
 		'',
 		'Options',
-		`  --from <version> Specify the version of ${libraryName} currently used`,
-		`  --to <version>   Specify the version of ${libraryName} to move to`,
-		'  --force, -f      Bypass safety checks and forcibly run codemods',
-		'  --silent, -S     Disable log output',
+		`  --from <version>         Specify the version of ${libraryName} currently used`,
+		`  --to <version>           Specify the version of ${libraryName} to move to`,
+		'  --force, -f              Bypass safety checks and forcibly run codemods',
+		'  --silent, -S             Disable log output',
+		'  --verbose, -V <level>    Set log output level (0=Error; 1=Skip/No change; 2=OK) [0]',
 		'',
 		'Available upgrades'
 	].concat(upgrades);
@@ -34,10 +35,14 @@ function cliArgs({pkg:{name,description,version}, libraryName},releases) {
 		help
 	}, {
 		boolean: ['force', 'silent'],
-		string: ['_', 'from', 'to'],
+		string: ['_', 'from', 'to', 'verbose'],
+		default: {
+			verbose: '0'
+		},
 		alias: {
 			f: 'force',
 			S: 'silent',
+			V: 'verbose',
 			h: 'help'
 		}
 	});

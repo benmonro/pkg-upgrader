@@ -10,7 +10,6 @@ import util from './util';
 import chalk from 'chalk';
 
 function runTransforms(settings, transforms, files) {
-	console.log(settings)
 	return Promise.mapSeries(transforms, transform => Runner.run(transform, files, settings));
 }
 

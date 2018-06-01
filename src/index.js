@@ -37,7 +37,8 @@ function cliArgs({pkg:{name,description,version}, libraryName},releases) {
 		boolean: ['force', 'silent'],
 		string: ['_', 'from', 'to', 'verbose'],
 		default: {
-			verbose: '0'
+			verbose: '0',
+			ignorePattern:['node_modules/*']
 		},
 		alias: {
 			f: 'force',

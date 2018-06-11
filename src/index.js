@@ -38,7 +38,8 @@ function cliArgs({pkg:{name,description,version}, libraryName},releases) {
 		string: ['_', 'from', 'to', 'verbose'],
 		default: {
 			verbose: '0',
-			ignorePattern:['node_modules/*']
+			ignorePattern:['**/node_modules/*', 'node_modules/*'],
+			printFilePath: true
 		},
 		alias: {
 			f: 'force',

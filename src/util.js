@@ -57,7 +57,6 @@ function selectVersions(releases, currentVersion, nextVersion) {
 	return releases
 		.filter(release => semver.satisfies(release.version, semverToRespect))
 		.map(({version}) => version);
-
 }
 
 function selectTransforms(releases, currentVersion, nextVersion) {

@@ -145,8 +145,8 @@ function applyCodemods(settings) {
 
 	const releases = settings.releases.slice().sort(util.sortByVersion);
 	const transforms = util.selectTransforms(releases, settings.from, settings.to)
-	.map(transform => transform.path)
-  .map(util.resolvePath(settings.dirname))
+			.map(transform => transform.path)
+  		.map(util.resolvePath(settings.dirname))
 
 	return checkAndRunTransform(settings, transforms, settings.files)
 		.return(settings);

@@ -18,7 +18,7 @@ function logger(transform, settings) {
 	const findTransform = util.selectTransforms(releases, settings.from, settings.to)
 		.filter(i => i.path === shortPath)
 	//log title
-	console.log(chalk.green(findTransform[0].title));
+	console.log(chalk.green('\n' + findTransform[0].title + '\n'));
 }
 
 function runTransforms(settings, transforms, files) {

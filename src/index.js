@@ -1,9 +1,7 @@
-import flatten from "lodash.flatten";
 import meow from 'meow';
 import globby from 'globby';
 import Promise from 'bluebird';
 import inquirer from 'inquirer';
-import assign from 'lodash.assign';
 import isGitClean from 'is-git-clean';
 import updateNotifier from 'update-notifier';
 import Runner from 'jscodeshift/dist/Runner.js';
@@ -196,13 +194,13 @@ function prompt(settings) {
 	const questions = getQuestions(settings, versions);
 
 	return inquirer.prompt(questions)
-	.then(answers => assign({}, settings, answers));
+	.then(answers => Object.assign({}, settings, answers));
 }
 
 function handleCliArgs(settings) {
 	const releases = settings.releases.slice().sort(util.sortByVersion);
 	const args = cliArgs(settings, releases);
-	const newSettings = assign({files: args.input}, settings, args.flags);
+	const newSettings = Object.assign({files: args.input}, settings, args.flags);
 	return Promise.resolve(newSettings);
 }
 

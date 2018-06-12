@@ -1,3 +1,4 @@
+import flatten from "lodash.flatten";
 import meow from 'meow';
 import globby from 'globby';
 import Promise from 'bluebird';
@@ -9,8 +10,20 @@ import Runner from 'jscodeshift/dist/Runner.js';
 import util from './util';
 import chalk from 'chalk';
 
+function logger(transform, settings) {
+	//remove dirname from path
+	const shortPath = transform.replace(new RegExp(settings.dirname + '/', 'gi'), '');
+	const releases = settings.releases.slice().sort(util.sortByVersion);
+	//use shortened path to match transform to title
+	const findTransform = util.selectTransforms(releases, settings.from, settings.to)
+		.filter(i => i.path === shortPath)
+	//log title
+	console.log(chalk.green(findTransform[0].title));
+}
+
 function runTransforms(settings, transforms, files) {
-	return Promise.mapSeries(transforms, transform => Runner.run(transform, files, settings));
+		return Promise.mapSeries(transforms, transform =>
+		Runner.run(transform, files, settings, logger(transform, settings)));
 }
 
 function cliArgs({pkg:{name,description,version}, libraryName},releases) {
@@ -38,8 +51,7 @@ function cliArgs({pkg:{name,description,version}, libraryName},releases) {
 		string: ['_', 'from', 'to', 'verbose'],
 		default: {
 			verbose: '0',
-			ignorePattern:['**/node_modules/*', 'node_modules/*'],
-			printFilePath: true
+			ignorePattern:['**/node_modules/*', 'node_modules/*']
 		},
 		alias: {
 			f: 'force',
@@ -133,7 +145,8 @@ function applyCodemods(settings) {
 
 	const releases = settings.releases.slice().sort(util.sortByVersion);
 	const transforms = util.selectTransforms(releases, settings.from, settings.to)
-		.map(util.resolvePath(settings.dirname));
+	.map(transform => transform.path)
+  .map(util.resolvePath(settings.dirname))
 
 	return checkAndRunTransform(settings, transforms, settings.files)
 		.return(settings);

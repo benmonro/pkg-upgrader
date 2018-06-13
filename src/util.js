@@ -1,7 +1,5 @@
 import path from "path";
 import semver from "semver";
-import flatten from "lodash.flatten";
-import findIndex from "lodash.findindex";
 
 function sortByVersion(a, b) {
 	if (a.version === b.version) {
@@ -44,7 +42,7 @@ function indexOfVersion(versions, version) {
 		return 0;
 	}
 
-	return findIndex(versions, v => semver.gte(v.value,version));
+	return versions.findIndex(v => semver.gte(v.value,version));
 }
 
 function takeVersionsAfter(versions, chosen) {
@@ -57,7 +55,6 @@ function selectVersions(releases, currentVersion, nextVersion) {
 	return releases
 		.filter(release => semver.satisfies(release.version, semverToRespect))
 		.map(({version}) => version);
-	
 }
 
 function selectTransforms(releases, currentVersion, nextVersion) {
@@ -66,8 +63,7 @@ function selectTransforms(releases, currentVersion, nextVersion) {
 	const transforms = releases
 		.filter(release => semver.satisfies(release.version, semverToRespect))
 		.map(({transforms}) => transforms);
-
-	return flatten(transforms);
+	return transforms.reduce( (a, b) => a.concat(b), []);
 }
 
 function resolvePath(dirname) {

@@ -24,7 +24,7 @@ function runTransforms(settings, transforms, files) {
 		Runner.run(transform, files, settings, logger(transform, settings)));
 }
 
-function cliArgs({pkg:{name,description,version}, libraryName},releases) {
+function cliArgs({pkg:{name,description,version}, libraryName, verbose, ignorePattern},releases) {
 	const upgrades = util.listUpgrades(releases);
 	const help = [
 		'Usage',
@@ -48,8 +48,8 @@ function cliArgs({pkg:{name,description,version}, libraryName},releases) {
 		boolean: ['force', 'silent'],
 		string: ['_', 'from', 'to', 'verbose'],
 		default: {
-			verbose: '0',
-			ignorePattern:['**/node_modules/*', 'node_modules/*']
+			verbose: verbose ? verbose : '0',
+			ignorePattern: ignorePattern ? ignorePattern : ['**/node_modules/*', 'node_modules/*']
 		},
 		alias: {
 			f: 'force',

@@ -1,4 +1,4 @@
-# pkg-upgrader 
+# pkg-upgrader
 
 <img src="screenshot.gif" width="440" align="right">
 
@@ -51,26 +51,50 @@ and create a `releases.json` file next to `cli.js`, which looks like the followi
 [{
 	"version": "0.14.0",
 	"transforms": [
-		"path/to/transform/a.js",
-		"path/to/transform/b.js"
+		{
+		"title": "title of transform a",
+		"path": "path/to/transform/a.js"
+		},
+		{
+		"title": "title of transform b",
+		"path": "path/to/transform/b.js"
+		}
 	]
 }, {
 	"version": "0.15.0",
 	"transforms": [
-		"path/to/transform/c.js",
-		"path/to/transform/d.js"
+		{
+		"title": "title of transform c",
+		"path": "path/to/transform/c.js"
+		},
+		{
+		"title": "title of transform d",
+		"path": "path/to/transform/d.js"
+		}
 	]
 }, {
 	"version": "1.0.0",
 	"transforms": [
-		"path/to/transform/e.js",
-		"path/to/transform/f.js"
+		{
+		"title": "title of transform e",
+		"path": "path/to/transform/e.js"
+		},
+		{
+		"title": "title of transform f",
+		"path": "path/to/transform/f.js"
+		}
 	]
 }, {
 	"version": "2.0.0",
 	"transforms": [
-		"path/to/transform/g.js",
-		"path/to/transform/h.js"
+		{
+		"title": "title of transform g",
+		"path": "path/to/transform/g.js"
+		},
+		{
+		"title": "title of transform h",
+		"path": "path/to/transform/h.js"
+		}
 	]
 }]
 ```

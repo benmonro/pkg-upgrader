@@ -1,6 +1,6 @@
 {
   "name": "pkg-upgrader",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "CLI builder to help users upgrade library versions.",
   "license": "MIT",
   "repository": "benmonro/pkg-upgrader",
@@ -45,9 +45,6 @@
     "inquirer": "^1.0.2",
     "is-git-clean": "^1.0.0",
     "jscodeshift": "^0.5.1",
-    "lodash.assign": "^4.0.9",
-    "lodash.findindex": "^4.4.0",
-    "lodash.flatten": "^4.2.0",
     "meow": "^3.7.0",
     "semver": "^5.1.0",
     "update-notifier": "^0.7.0"

@@ -2,15 +2,26 @@ import meow from 'meow';
 import globby from 'globby';
 import Promise from 'bluebird';
 import inquirer from 'inquirer';
-import assign from 'lodash.assign';
 import isGitClean from 'is-git-clean';
 import updateNotifier from 'update-notifier';
 import Runner from 'jscodeshift/dist/Runner.js';
 import util from './util';
 import chalk from 'chalk';
 
+function logger(transform, settings) {
+	//remove dirname from path
+	const shortPath = transform.replace(new RegExp(settings.dirname + '/', 'gi'), '');
+	const releases = settings.releases.slice().sort(util.sortByVersion);
+	//use shortened path to match transform to title
+	const findTransform = util.selectTransforms(releases, settings.from, settings.to)
+		.filter(i => i.path === shortPath)
+	//log title
+	console.log(chalk.green('\n' + findTransform[0].title + ':\n'));
+}
+
 function runTransforms(settings, transforms, files) {
-	return Promise.mapSeries(transforms, transform => Runner.run(transform, files, settings));
+		return Promise.mapSeries(transforms, transform =>
+		Runner.run(transform, files, settings, logger(transform, settings)));
 }
 
 function cliArgs({pkg:{name,description,version}, libraryName},releases) {
@@ -132,7 +143,8 @@ function applyCodemods(settings) {
 
 	const releases = settings.releases.slice().sort(util.sortByVersion);
 	const transforms = util.selectTransforms(releases, settings.from, settings.to)
-		.map(util.resolvePath(settings.dirname));
+			.map(transform => transform.path)
+  		.map(util.resolvePath(settings.dirname))
 
 	return checkAndRunTransform(settings, transforms, settings.files)
 		.return(settings);
@@ -182,13 +194,13 @@ function prompt(settings) {
 	const questions = getQuestions(settings, versions);
 
 	return inquirer.prompt(questions)
-	.then(answers => assign({}, settings, answers));
+	.then(answers => Object.assign({}, settings, answers));
 }
 
 function handleCliArgs(settings) {
 	const releases = settings.releases.slice().sort(util.sortByVersion);
 	const args = cliArgs(settings, releases);
-	const newSettings = assign({files: args.input}, settings, args.flags);
+	const newSettings = Object.assign({files: args.input}, settings, args.flags);
 	return Promise.resolve(newSettings);
 }
 

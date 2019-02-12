@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import util from '../src/util';
 
 test('sortByVersion', () => {

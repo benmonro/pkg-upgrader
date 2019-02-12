@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.3"></a>
+## [0.3.3](https://github.com/benmonro/pkg-upgrader/compare/v0.3.2...v0.3.3) (2019-02-12)
+
+
+### Bug Fixes
+
+* update jest config for failed test ([83eff0a](https://github.com/benmonro/pkg-upgrader/commit/83eff0a))
+
+
+
 <a name="0.3.2"></a>
 ## [0.3.2](https://github.com/benmonro/pkg-upgrader/compare/v0.3.1...v0.3.2) (2018-06-13)
 

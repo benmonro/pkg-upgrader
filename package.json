@@ -21,7 +21,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "build": "dir-babel --src-dir src --out-dir lib --copy-files",
+    "build": "babel src --out-dir lib",
     "std-version": "standard-version -m \"chore(release): version %s build ${CIRCLE_BUILD_NUM} [ci skip]\"",
     "test": "jest"
   },
@@ -44,16 +44,17 @@
     "globby": "^4.1.0",
     "inquirer": "^1.0.2",
     "is-git-clean": "^1.0.0",
-    "jscodeshift": "^0.5.1",
+    "jscodeshift": "^0.6.4",
     "meow": "^3.7.0",
     "semver": "^5.1.0",
     "update-notifier": "^0.7.0"
   },
   "devDependencies": {
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "dir-babel": "^1.0.14",
-    "jest": "^22.4.2",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-function-bind": "^7.2.0",
+    "@babel/preset-env": "^7.4.5",
+    "jest": "^24.8.0",
     "standard-version": "^4.3.0"
   }
 }

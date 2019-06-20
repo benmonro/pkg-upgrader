@@ -1,16 +1,4 @@
 {
-    "presets": [ "stage-0",
-        [ "env", {
-            "targets": {
-              "browsers": [
-                "Chrome >= 57",
-                "Firefox >= 52",
-                "Edge >= 12",
-                "Explorer >= 11",
-                "Safari >= 10",
-              ]
-            }
-          }
-      ]
-    ]
+    "presets": [ "@babel/preset-env"],
+		"plugins": ["@babel/plugin-proposal-function-bind"]
 }

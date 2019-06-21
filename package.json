@@ -1,6 +1,6 @@
 {
   "name": "pkg-upgrader",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "CLI builder to help users upgrade library versions.",
   "license": "MIT",
   "repository": "benmonro/pkg-upgrader",

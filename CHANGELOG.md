@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.4"></a>
+## [0.3.4](https://github.com/benmonro/pkg-upgrader/compare/v0.3.3...v0.3.4) (2019-06-21)
+
+
+### Bug Fixes
+
+* remove targets [#12](https://github.com/benmonro/pkg-upgrader/issues/12) ([84cf0af](https://github.com/benmonro/pkg-upgrader/commit/84cf0af))
+
+
+
 <a name="0.3.3"></a>
 ## [0.3.3](https://github.com/benmonro/pkg-upgrader/compare/v0.3.2...v0.3.3) (2019-02-12)
 

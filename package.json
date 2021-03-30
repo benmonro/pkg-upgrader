@@ -55,7 +55,7 @@
     "@babel/plugin-proposal-function-bind": "^7.2.0",
     "@babel/preset-env": "^7.4.5",
     "jest": "^24.8.0",
-    "standard-version": "^4.3.0"
+    "standard-version": "^8.0.1"
   },
   "jest": {
     "testURL": "http://localhost/"
